@@ -1,0 +1,20 @@
+name: Upload to PosterDigital
+
+on:
+  push:
+    paths:
+      - 'appointments.html'
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Upload to PosterDigital
+        run: |
+          curl -u "importhtml.api.user:jD/[g9},63" \
+            -X POST \
+            -F "file=@appointments.html" \
+            https://benelux.accenture.posterdigital.com/api/v1/import_html_file/
