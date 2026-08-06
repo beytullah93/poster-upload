@@ -1,0 +1,304 @@
+<html><head>
+<title>Today's Appointments</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+}
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+body { 
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    color: #1a2a3a;
+    min-height: 100vh;
+    width: 100%;
+}
+.container { 
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    background: transparent;
+    min-height: 100vh;
+    padding: 20px;
+}
+.header { 
+    background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 50%, #3182ce 100%);
+    padding: 50px 40px;
+    text-align: center;
+    border-radius: 20px;
+    margin-bottom: 35px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    width: 100%;
+}
+.header h2 {
+    margin: 0 0 20px 0;
+    font-size: 52px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+.header h2 i {
+    margin-right: 18px;
+    color: #ffd700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    font-size: 52px;
+}
+.date-display {
+    font-size: 24px;
+    background: rgba(0,0,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 40px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,215,0,0.5);
+    color: #ffd700;
+    font-weight: 600;
+}
+.date-display i {
+    font-size: 24px;
+    color: #ffd700;
+}
+.appointments-wrapper {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+    border: 1px solid #e2e8f0;
+    width: 100%;
+}
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse;
+    font-size: 20px;
+    min-width: 800px;
+}
+th { 
+    padding: 25px 22px; 
+    text-align: left; 
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 50%, #2d3748 100%);
+}
+th i {
+    margin-right: 12px;
+    font-size: 20px;
+    color: #ffd700;
+}
+td { 
+    padding: 22px 22px; 
+    border-bottom: 1px solid #e9ecef; 
+    color: #2d3748;
+    font-size: 20px;
+}
+tr:hover { 
+    background: linear-gradient(90deg, #fff5e6 0%, #fff0e0 100%);
+}
+tr:nth-child(even) {
+    background: #faf9ff;
+}
+.badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.badge-upcoming {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    color: #92400e;
+    border: 1px solid #fbbf24;
+}
+.badge-progress {
+    background: linear-gradient(135deg, #fed7aa, #fdba74);
+    color: #9c4221;
+    border: 1px solid #f97316;
+}
+.badge-completed {
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+.time-slot {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    color: #1e3a8a;
+    background: linear-gradient(135deg, #fef9e3, #fef3c7);
+    padding: 6px 16px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    border: 1px solid #fbbf24;
+}
+.time-slot i {
+    color: #f59e0b;
+    font-size: 16px;
+}
+.patient-name {
+    font-weight: 700;
+    color: #1e3a5f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+}
+.patient-name i {
+    color: #3b82f6;
+    font-size: 20px;
+}
+.doctor-name {
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+}
+.doctor-name i {
+    color: #ec489a;
+    font-size: 18px;
+}
+.room-badge {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    padding: 6px 16px;
+    border-radius: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #92400e;
+    border: 1px solid #fbbf24;
+}
+.room-badge i {
+    color: #f59e0b;
+    font-size: 16px;
+}
+.empty-agent {
+    color: #a0aec0;
+    font-style: italic;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+}
+.agent-name {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+    padding: 6px 16px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #0369a1;
+    border: 1px solid #38bdf8;
+}
+.agent-name i {
+    color: #0ea5e9;
+    font-size: 16px;
+}
+.request-number {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+    padding: 6px 16px;
+    border-radius: 15px;
+    display: inline-block;
+    font-size: 18px;
+    color: #6b21a5;
+    border: 1px solid #c084fc;
+}
+.enterprise-id {
+    font-family: monospace;
+    font-weight: 600;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    padding: 6px 16px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 18px;
+    color: #065f46;
+    border: 1px solid #34d399;
+}
+.office-location {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #4a5568;
+    font-size: 18px;
+}
+.office-location i {
+    color: #f59e0b;
+    font-size: 18px;
+}
+@media (max-width: 1200px) {
+    .container { padding: 15px; }
+    th, td { padding: 18px 15px; font-size: 18px; }
+    th { font-size: 18px; }
+    .badge { font-size: 16px; padding: 6px 14px; }
+    .time-slot { font-size: 16px; }
+    .patient-name { font-size: 18px; }
+    .request-number, .enterprise-id, .agent-name, .room-badge { font-size: 16px; }
+}
+@media (max-width: 768px) {
+    .container { padding: 10px; }
+    .header { padding: 25px 20px; margin-bottom: 20px; }
+    .header h2 { font-size: 32px; }
+    .header h2 i { font-size: 32px; }
+    .date-display { font-size: 16px; padding: 10px 20px; }
+    th { font-size: 14px; padding: 14px 10px; }
+    td { font-size: 14px; padding: 14px 10px; }
+    .badge { padding: 4px 10px; font-size: 12px; }
+    .time-slot { font-size: 12px; padding: 4px 10px; }
+    .request-number, .enterprise-id, .agent-name, .room-badge { font-size: 12px; padding: 4px 10px; }
+    .patient-name { font-size: 14px; }
+    .doctor-name { font-size: 13px; }
+    .office-location { font-size: 13px; }
+    .empty-agent { font-size: 13px; }
+}
+@media (max-width: 480px) {
+    .container { padding: 8px; }
+    .header h2 { font-size: 24px; }
+    .header h2 i { font-size: 24px; }
+    .date-display { font-size: 12px; padding: 6px 12px; }
+    th { font-size: 11px; padding: 12px 8px; }
+    td { font-size: 12px; padding: 12px 8px; }
+    .badge { padding: 3px 8px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+<h2><i class="fas fa-calendar-check"></i> Today's Appointments</h2>
+<div class="date-display">
+<i class="fas fa-calendar-day"></i>
+<span>Thursday, August 06, 2026</span>
+</div>
+</div>
+<div class="appointments-wrapper">
+<div class="table-container">
+<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse; font-family: Arial, sans-serif; width: 100%; font-size: 18px;"><thead><tr><th style="text-align: left; padding: 10px; border: 1px solid #ddd;">TimeSlot:</th><th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Appointment Type:</th><th style="text-align: left; padding: 10px; border: 1px solid #ddd;"> IncidentNumber:</th><th style="text-align: left; padding: 10px; border: 1px solid #ddd;">EnterpriseID:</th><th style="text-align: left; padding: 10px; border: 1px solid #ddd;">Office:</th><th style="text-align: left; padding: 10px; border: 1px solid #ddd;">LTSagent:</th></tr></thead><tbody><tr><td>10:00 - 10:15</td><td>Mobile Phone Replacement</td><td>N/A</td><td>r.ukey</td><td>Amsterdam, Gustav Mahlerplein 90 </td><td></td></tr><tr><td>11:00 - 11:15</td><td>Mobile Phone Replacement</td><td>N/A</td><td>sreeja.chakrabarti</td><td>Amsterdam, Gustav Mahlerplein 90 </td><td>kei.yi.chiu</td></tr><tr><td>14:00 - 14:15</td><td>Laptop Replacement</td><td></td><td>vaikundam.velayudham</td><td>Amsterdam, Gustav Mahlerplein 90 </td><td></td></tr><tr><td>16:00 - 16:15</td><td>Mobile Phone Replacement</td><td>N/A</td><td>sabyasachi.b.dash</td><td>Amsterdam, Gustav Mahlerplein 90 </td><td></td></tr></tbody></table>
+</div>
+</div>
+</div>
+
+</body></html>
